@@ -57,7 +57,7 @@ class Feed extends Component {
     const graphqlQuery = {
       query: `
         {
-          getPosts {
+          getPosts(page: ${page})  {
             posts {
               _id
               title
@@ -191,7 +191,7 @@ mutation{
           );
         }
         if(resData.errors){
-          throw new Error ('User creation failed');
+          throw new Error ('User login failed');
         }
         console.log(resData);
         const post = {
@@ -209,6 +209,7 @@ mutation{
             );
             updatedPosts[postIndex] = post;
           } else {
+            updatedPosts.pop();
             updatedPosts.unshift(post);
           }
           return {
